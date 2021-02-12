@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">walksforwalks</string>
+    <string name = "test_1">Daniel is testing this </string>
 </resources>
