@@ -5,10 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".RegisterUser">
 
     <EditText
-        android:id="@+id/editText_main_username"
+        android:id="@+id/editText_register_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        tools:layout_editor_absoluteX="60dp"
+        tools:layout_editor_absoluteY="39dp" />
+
+    <EditText
+        android:id="@+id/editText_register_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -16,7 +26,7 @@
         android:text="Name" />
 
     <EditText
-        android:id="@+id/editText_main_password"
+        android:id="@+id/editText_register_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -24,14 +34,15 @@
         android:text="Name" />
 
     <Button
-        android:id="@+id/button_main_login"
+        android:id="@+id/button_register_user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Button" />
 
-    <TextView
-        android:id="@+id/textView_main_register"
+    <ProgressBar
+        android:id="@+id/progressBar_register_user"
+        style="?android:attr/progressBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:visibility="gone"/>
 </LinearLayout>
