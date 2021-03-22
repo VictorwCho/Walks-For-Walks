@@ -7,13 +7,26 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/walksforwalks" />
+
+    <ProgressBar
+        android:id="@+id/progressBar_main_login"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
     <EditText
         android:id="@+id/editText_main_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name" />
+        android:text="@string/main_email" />
 
     <EditText
         android:id="@+id/editText_main_password"
@@ -21,17 +34,23 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name" />
+        android:text="@string/main_password" />
 
     <Button
         android:id="@+id/button_main_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:text="@string/main_logIn" />
 
-    <TextView
-        android:id="@+id/textView_main_register"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textView_main_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_register" />
+
+    </LinearLayout>
 </LinearLayout>

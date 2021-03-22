@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name"
+        android:text="@string/register_user_name"
         tools:layout_editor_absoluteX="60dp"
         tools:layout_editor_absoluteY="39dp" />
 
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name" />
+        android:text="@string/reguster_user_email" />
 
     <EditText
         android:id="@+id/editText_register_password"
@@ -31,13 +31,13 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name" />
+        android:text="@string/register_user_password" />
 
     <Button
         android:id="@+id/button_register_user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:text="@string/register_user_button" />
 
     <ProgressBar
         android:id="@+id/progressBar_register_user"
@@ -45,4 +45,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"/>
+
 </LinearLayout>
