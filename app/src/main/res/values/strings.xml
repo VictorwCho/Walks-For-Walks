@@ -21,4 +21,7 @@
     <string name="nav_close_drawer">Close navigation drawer</string>
     <string name="user_name">name</string>
     <string name="placeholder_img">star</string>
+    <string name="rV_pet_name">pet name</string>
+    <string name="rV_pet_breed">pet breed</string>
+    <string name="user_phone">phone #</string>
 </resources>

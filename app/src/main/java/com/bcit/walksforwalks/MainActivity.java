@@ -8,6 +8,8 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,8 +17,24 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    private static RecyclerView rvUsers;
+    private static List<User> userList;
+    private FirebaseUser currentUser;
+
+    private DatabaseReference dbUsers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +56,42 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        rvUsers = findViewById(R.id.rV_main_users); // get rV reference
+        userList = new ArrayList<>(); // initialize the userList
+
+        currentUser = FirebaseAuth.getInstance().getCurrentUser(); // Get currentUser reference
+        dbUsers = FirebaseDatabase.getInstance().getReference("Users"); // Get database reference
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        dbUsers.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                userList.clear();
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+
+                    // this is where we will check the postal code and only add users to
+                    // the recycler who are in the users vicinity
+
+                    // only add users who are not the current user to the recyclerview
+                    if (userSnapshot.getValue() != currentUser) {
+                        User user = userSnapshot.getValue(User.class);
+                        userList.add(user); // populate userList with users from DB}
+                    }
+                }
+
+                UserAdapter adapter = new UserAdapter(userList);  // get a user adapter
+                rvUsers.setAdapter(adapter); // set the user adapter
+                rvUsers.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
     }
 
     @Override
