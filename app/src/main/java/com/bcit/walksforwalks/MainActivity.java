@@ -27,6 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -77,10 +78,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     // the recycler who are in the users vicinity
 
                     // only add users who are not the current user to the recyclerview
-                    if (userSnapshot.getValue() != currentUser) {
-                        User user = userSnapshot.getValue(User.class);
-                        userList.add(user); // populate userList with users from DB}
+                    User user = userSnapshot.getValue(User.class);
+                    if (!Objects.equals(currentUser.getEmail(), user.getEmail())) {
+                        // populate userList with user from DB
+                        userList.add(user);
                     }
+
                 }
 
                 UserAdapter adapter = new UserAdapter(userList);  // get a user adapter
