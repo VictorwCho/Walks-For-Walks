@@ -29,6 +29,8 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
     private EditText editEmail;
     private EditText editPassword;
     private ProgressBar progressBar;
+    private EditText phoneNumber;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
