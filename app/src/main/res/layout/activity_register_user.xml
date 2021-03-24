@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="@string/reguster_user_email" />
+        android:text="@string/register_user_email" />
 
     <EditText
         android:id="@+id/editText_register_password"

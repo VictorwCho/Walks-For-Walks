@@ -5,10 +5,20 @@
     <string name="main_logIn_button">Log-In</string>
     <string name="register_user_button">Register</string>
     <string name="register_user_name">Full Name</string>
-    <string name="reguster_user_email">E-mail</string>
+    <string name="register_user_email">E-mail</string>
     <string name="register_user_password">Password</string>
     <string name="main_email">E-mail</string>
     <string name="main_password">Password</string>
     <string name="main_logIn">Log-In</string>
     <string name="main_register">Register</string>
+    <string name="drawer_profile">profile</string>
+    <string name="nav_help">help</string>
+    <string name="nav_contact">contact</string>
+    <string name="nav_support">support</string>
+    <string name="nav_logout">logout</string>
+    <string name="nav_profile">profile</string>
+    <string name="nav_open_drawer">Open Navigation drawer</string>
+    <string name="nav_close_drawer">Close navigation drawer</string>
+    <string name="user_name">name</string>
+    <string name="placeholder_img">star</string>
 </resources>

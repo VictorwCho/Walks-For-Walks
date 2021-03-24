@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             return;
         }
 
-        if (Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             userEmail.setError("Please enter a valid email!");
             userEmail.requestFocus();
             return;
@@ -97,7 +97,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    // redict to user profile
+                    startActivity(new Intent(getBaseContext(), MainActivity.class));
                 } else {
                     Toast.makeText(LoginActivity.this, "Failed to login! Please" +
                             "check your credentials", Toast.LENGTH_LONG).show();
