@@ -28,6 +28,8 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
     private EditText editFullName;
     private EditText editEmail;
     private EditText editPassword;
+    private EditText postalCode;
+
     private ProgressBar progressBar;
 
     @Override
