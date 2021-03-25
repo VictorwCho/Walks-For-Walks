@@ -4,7 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    tools:context=".ProfileActivity">
+
+    <include
+        android:id="@+id/toolbar_profile"
+        layout="@layout/toolbar_profile" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -16,7 +20,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.034">
+        app:layout_constraintVertical_bias="0.145">
 
         <ImageView
             android:id="@+id/iV_profile_frag_profilePic"
@@ -35,6 +39,16 @@
 
     </LinearLayout>
 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="61dp"
+        android:text="@string/edit_profile_btn"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="396dp"
@@ -46,7 +60,7 @@
         app:layout_constraintHorizontal_bias="0.466"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.586">
+        app:layout_constraintVertical_bias="0.901">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/profile_frag_stat_card"
@@ -70,6 +84,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/profile_frag_stats"
                     android:textAlignment="center" />
+
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -104,8 +119,8 @@
         </androidx.cardview.widget.CardView>
 
         <Space
-            android:layout_width="11dp"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="182dp"
             android:layout_weight="1" />
 
         <androidx.cardview.widget.CardView
@@ -135,13 +150,4 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="61dp"
-        android:text="@string/edit_profile_btn"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 </androidx.constraintlayout.widget.ConstraintLayout>

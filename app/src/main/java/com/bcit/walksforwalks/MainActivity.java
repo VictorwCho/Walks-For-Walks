@@ -81,9 +81,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         currentUserDb.addListenerForSingleValueEvent(eventListener);
     }
 
-    private boolean matchProvinceByPostalCode(String postalCode1, String postalCode2)
-    {
-        return(postalCode1.charAt(0) == postalCode2.charAt(0));
+    private boolean matchProvinceByPostalCode(String postalCode1, String postalCode2) {
+        return (postalCode1.charAt(0) == postalCode2.charAt(0));
     }
 
     @Override
@@ -91,34 +90,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onStart();
 
 
-
-
         dbUsers.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 userList.clear();
 
-                for (DataSnapshot userSnapshot : dataSnapshot.getChildren())
-                {
-
-                   User user = userSnapshot.getValue(User.class);
-                    if (!Objects.equals(currentUser.getEmail(), user.getEmail()))
-                    {
-                        if(matchProvinceByPostalCode(postalCode,user.postalCode)) {
-
-                            if (matchProvinceByPostalCode(postalCode, user.postalCode)) {
-                                userList.add(user);
-                            }
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                    User user = userSnapshot.getValue(User.class);
+                    if (!Objects.equals(currentUser.getEmail(), user.getEmail())) {
+                        if (matchProvinceByPostalCode(postalCode, user.postalCode)) {
+                            userList.add(user);
                         }
                     }
-
-
-
-
-
-//if (matchProvinceByPostalCode(postalCode, user.postalCode)) {
-//                            userList.add(user);
-//                        }
 
                     UserAdapter adapter = new UserAdapter(userList);  // get a user adapter
                     rvUsers.setAdapter(adapter); // set the user adapter
@@ -149,35 +132,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        Fragment fragment = null;
         Intent intent = null;
 
-//
-//        switch (id) {
-//            case R.id.nav_drafts:
-//                fragment = draftsFragment;
-//                break;
-//            case R.id.nav_sent:
-//                fragment = sentItemsFragment;
-//                break;
-//            case R.id.nav_trash:
-//                fragment = trashFragment;
-//                break;
-//            case R.id.nav_help:
-//                intent = new Intent(this, HelpActivity.class);
-//                break;
-//            case R.id.nav_feedback:
-//                intent = new Intent(this, FeedbackActivity.class);
-//                break;
-//            default:
-//                fragment = inboxFragment;
-//
-//        }
-        if (fragment != null) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//            transaction.replace(R.id.fragment_view, fragment);
-//            transaction.commit();
-        } else {
+
+        if (id == R.id.nav_profile) {
+            intent = new Intent(this, ProfileActivity.class);
             startActivity(intent);
         }
 

@@ -38,4 +38,5 @@
     <string name="profile_frag_pets">PETS</string>
     <string name="profile_frag_stats">STATS</string>
     <string name="person">PERSON</string>
+    <string name="main">main</string>
 </resources>
