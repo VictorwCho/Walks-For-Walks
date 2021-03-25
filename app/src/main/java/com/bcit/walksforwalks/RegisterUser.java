@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -16,7 +17,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterUser extends AppCompatActivity implements View.OnClickListener {
 
@@ -28,7 +33,11 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
     private EditText editFullName;
     private EditText editEmail;
     private EditText editPassword;
-    private EditText postalCode;
+    private EditText editPetBreed;
+    private EditText editPetName;
+    private EditText editPostalCode;
+    private EditText editPhoneNumber;
+
 
     private ProgressBar progressBar;
 
@@ -42,6 +51,12 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         editFullName = findViewById(R.id.editText_register_name);
         editEmail = findViewById(R.id.editText_register_email);
         editPassword = findViewById(R.id.editText_register_password);
+        editPetBreed = findViewById(R.id.editText_register_pet_breed);
+        editPetName = findViewById(R.id.editText_register_pet_name);
+        editPostalCode = findViewById(R.id.editText_postal_code);
+        editPhoneNumber = findViewById(R.id.editText_phone_number);
+
+
         Button registerUser = findViewById(R.id.button_register_user);
         progressBar = findViewById(R.id.progressBar_register_user);
 
@@ -59,6 +74,26 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         String email = editEmail.getText().toString().trim();
         String fullName = editFullName.getText().toString().trim();
         String password = editPassword.getText().toString().trim();
+
+        EditText[] attributes = {editFullName,editEmail,editPassword, editPetBreed, editPetName, editPostalCode, editPhoneNumber};
+        String[] attributeString = {"Full Name", "Email", "Password", "Pet Breed", "Pet Name", "Postal Code", "Phone Number"};
+        HashMap<String, EditText> userInfo = new HashMap<String, EditText>();
+        for (int i =0 ; i<attributes.length; i++){
+            userInfo.put(attributeString[i], attributes[i]);
+        }
+
+        for (Map.Entry<String, EditText> attribute : userInfo.entrySet()){
+           String attributeName = attribute.getKey();
+           EditText editText = attribute.getValue();
+
+           if(editText.getText().toString().trim().isEmpty()){
+               editText.setError(attributeName + " is required");
+               editText.requestFocus();
+               return;
+           }
+        }
+
+
 
         if (fullName.isEmpty()) {
             editFullName.setError("Full name is required!");
@@ -85,7 +120,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         }
 
         if (password.length() < 6) {
-            editPassword.setError("In password length needs to be greather than 6.");
+            editPassword.setError("In password length needs to be greater than 6.");
             editPassword.requestFocus();
             return;
         }
