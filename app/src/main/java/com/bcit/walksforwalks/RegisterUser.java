@@ -77,7 +77,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
 
         EditText[] attributes = {editFullName,editEmail,editPassword, editPetBreed, editPetName, editPostalCode, editPhoneNumber};
         String[] attributeString = {"Full Name", "Email", "Password", "Pet Breed", "Pet Name", "Postal Code", "Phone Number"};
-        HashMap<String, EditText> userInfo = new HashMap<String, EditText>();
+        HashMap<String, EditText> userInfo = new HashMap<>();
         for (int i =0 ; i<attributes.length; i++){
             userInfo.put(attributeString[i], attributes[i]);
         }

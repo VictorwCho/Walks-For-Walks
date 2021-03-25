@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,6 +32,7 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    ProfileFragment profileFragment;
     private static RecyclerView rvUsers;
     private static List<User> userList;
     private FirebaseUser currentUser;
@@ -43,6 +45,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        profileFragment = (ProfileFragment) fragmentManager.findFragmentById(R.id.fragment_view);
 
 
         // Get hamburger Button
@@ -118,9 +124,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent intent = null;
 
 //
-//        switch (id) {
-//            case R.id.nav_drafts:
-//                fragment = draftsFragment;
+        switch (id) {
+//            case R.id.nav_profile:
+//                fragment = ;
 //                break;
 //            case R.id.nav_sent:
 //                fragment = sentItemsFragment;
@@ -134,14 +140,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //            case R.id.nav_feedback:
 //                intent = new Intent(this, FeedbackActivity.class);
 //                break;
-//            default:
-//                fragment = inboxFragment;
-//
-//        }
+            default:
+                fragment = profileFragment;
+        }
         if (fragment != null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//            transaction.replace(R.id.fragment_view, fragment);
-//            transaction.commit();
+            transaction.replace(R.id.fragment_view, fragment);
+            transaction.commit();
         } else {
             startActivity(intent);
         }
