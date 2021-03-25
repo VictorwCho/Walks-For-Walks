@@ -7,15 +7,16 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,12 +33,11 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    ProfileFragment profileFragment;
     private static RecyclerView rvUsers;
     private static List<User> userList;
     private FirebaseUser currentUser;
-
     private DatabaseReference dbUsers;
+    public String postalCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +45,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-
-        profileFragment = (ProfileFragment) fragmentManager.findFragmentById(R.id.fragment_view);
-
 
         // Get hamburger Button
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -69,32 +64,66 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         currentUser = FirebaseAuth.getInstance().getCurrentUser(); // Get currentUser reference
         dbUsers = FirebaseDatabase.getInstance().getReference("Users"); // Get database reference
 
+        String current_user_uid = dbUsers.child(currentUser.getUid()).getKey();
+
+        ValueEventListener eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                postalCode = snapshot.child("postalCode").getValue(String.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+        DatabaseReference currentUserDb = dbUsers.child(current_user_uid);
+        currentUserDb.addListenerForSingleValueEvent(eventListener);
+    }
+
+    private boolean matchProvinceByPostalCode(String postalCode1, String postalCode2)
+    {
+        return(postalCode1.charAt(0) == postalCode2.charAt(0));
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+
+
+
+
         dbUsers.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 userList.clear();
-                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
 
-                    // this is where we will check the postal code and only add users to
-                    // the recycler who are in the users vicinity
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren())
+                {
 
-                    // only add users who are not the current user to the recyclerview
-                    User user = userSnapshot.getValue(User.class);
-                    if (!Objects.equals(currentUser.getEmail(), user.getEmail())) {
-                        // populate userList with user from DB
-                        userList.add(user);
+                   User user = userSnapshot.getValue(User.class);
+                    if (!Objects.equals(currentUser.getEmail(), user.getEmail()))
+                    {
+                        if(matchProvinceByPostalCode(postalCode,user.postalCode)) {
+
+                            if (matchProvinceByPostalCode(postalCode, user.postalCode)) {
+                                userList.add(user);
+                            }
+                        }
                     }
 
-                }
 
-                UserAdapter adapter = new UserAdapter(userList);  // get a user adapter
-                rvUsers.setAdapter(adapter); // set the user adapter
-                rvUsers.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+
+
+
+//if (matchProvinceByPostalCode(postalCode, user.postalCode)) {
+//                            userList.add(user);
+//                        }
+
+                    UserAdapter adapter = new UserAdapter(userList);  // get a user adapter
+                    rvUsers.setAdapter(adapter); // set the user adapter
+                    rvUsers.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+                }
             }
 
             @Override
@@ -124,9 +153,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent intent = null;
 
 //
-        switch (id) {
-//            case R.id.nav_profile:
-//                fragment = ;
+//        switch (id) {
+//            case R.id.nav_drafts:
+//                fragment = draftsFragment;
 //                break;
 //            case R.id.nav_sent:
 //                fragment = sentItemsFragment;
@@ -140,13 +169,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //            case R.id.nav_feedback:
 //                intent = new Intent(this, FeedbackActivity.class);
 //                break;
-            default:
-                fragment = profileFragment;
-        }
+//            default:
+//                fragment = inboxFragment;
+//
+//        }
         if (fragment != null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_view, fragment);
-            transaction.commit();
+//            transaction.replace(R.id.fragment_view, fragment);
+//            transaction.commit();
         } else {
             startActivity(intent);
         }

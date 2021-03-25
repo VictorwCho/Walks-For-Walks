@@ -6,17 +6,19 @@ public class User {
     public String phone;
     public String petName;
     public String petBreed;
+    public String postalCode;
 
     public User() {
 
     }
 
-    public User(String fullName, String email, String phone, String petName, String petBreed) {
+    public User(String fullName, String email, String phone, String petName, String petBreed, String postalCode) {
         this.fullName = fullName;
         this.email = email;
         this.phone = phone;
         this.petName = petName;
         this.petBreed = petBreed;
+        this.postalCode = postalCode;
     }
 
     public User(String fullName, String email) {
