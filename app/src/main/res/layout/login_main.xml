@@ -25,16 +25,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="@string/main_email" />
+        android:inputType="textWebEmailAddress"
+        android:hint="@string/main_email" />
 
     <EditText
         android:id="@+id/editText_login_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="@string/main_password" />
+        android:inputType="textWebPassword"
+        android:hint="@string/main_password" />
 
     <Button
         android:id="@+id/button_login_login"

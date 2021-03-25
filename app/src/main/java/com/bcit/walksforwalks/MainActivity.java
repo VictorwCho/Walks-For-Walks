@@ -13,8 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,14 +29,15 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static RecyclerView rvUsers;
     private static List<User> userList;
     private FirebaseUser currentUser;
-
     private DatabaseReference dbUsers;
+    public String postalCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +45,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         // Get hamburger Button
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -62,30 +64,69 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         currentUser = FirebaseAuth.getInstance().getCurrentUser(); // Get currentUser reference
         dbUsers = FirebaseDatabase.getInstance().getReference("Users"); // Get database reference
 
+        String current_user_uid = dbUsers.child(currentUser.getUid()).getKey();
+
+        ValueEventListener eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                postalCode = snapshot.child("postalCode").getValue(String.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+        DatabaseReference currentUserDb = dbUsers.child(current_user_uid);
+        currentUserDb.addListenerForSingleValueEvent(eventListener);
+    }
+
+    private boolean matchProvinceByPostalCode(String postalCode1, String postalCode2)
+    {
+        return(postalCode1.charAt(0) == postalCode2.charAt(0));
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+
+
+
+
         dbUsers.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 userList.clear();
-                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
 
-                    // this is where we will check the postal code and only add users to
-                    // the recycler who are in the users vicinity
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren())
+                {
 
-                    // only add users who are not the current user to the recyclerview
-                    if (userSnapshot.getValue() != currentUser) {
-                        User user = userSnapshot.getValue(User.class);
-                        userList.add(user); // populate userList with users from DB}
+                   User user = userSnapshot.getValue(User.class);
+                    if (!Objects.equals(currentUser.getEmail(), user.getEmail()))
+                    {
+                        if(matchProvinceByPostalCode(postalCode,user.postalCode)) {
+
+                            if (matchProvinceByPostalCode(postalCode, user.postalCode)) {
+                                userList.add(user);
+                            }
+                        }
                     }
-                }
 
-                UserAdapter adapter = new UserAdapter(userList);  // get a user adapter
-                rvUsers.setAdapter(adapter); // set the user adapter
-                rvUsers.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+
+
+
+
+//if (matchProvinceByPostalCode(postalCode, user.postalCode)) {
+//                            userList.add(user);
+//                        }
+
+
+
+
+                    UserAdapter adapter = new UserAdapter(userList);  // get a user adapter
+                    rvUsers.setAdapter(adapter); // set the user adapter
+                    rvUsers.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+                }
             }
 
             @Override

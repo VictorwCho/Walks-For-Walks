@@ -74,18 +74,23 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         String email = editEmail.getText().toString().trim();
         String fullName = editFullName.getText().toString().trim();
         String password = editPassword.getText().toString().trim();
+        String petBreed = editPetBreed.getText().toString().trim();
+        String petName = editPetName.getText().toString().trim();
+        String postalCode = editPostalCode.getText().toString().trim().replaceAll(" ", "");
+        String phoneNumber = editPhoneNumber.getText().toString().trim();
 
-        EditText[] attributes = {editFullName,editEmail,editPassword, editPetBreed, editPetName, editPostalCode, editPhoneNumber};
-        String[] attributeString = {"Full Name", "Email", "Password", "Pet Breed", "Pet Name", "Postal Code", "Phone Number"};
+        EditText[] attributes = {editFullName,editEmail,editPassword, editPetBreed,
+                editPetName, editPostalCode, editPhoneNumber};
+        String[] attributeString = {"Full Name", "Email", "Password", "Pet Breed",
+                "Pet Name", "Postal Code", "Phone Number"};
+
         HashMap<String, EditText> userInfo = new HashMap<String, EditText>();
         for (int i =0 ; i<attributes.length; i++){
             userInfo.put(attributeString[i], attributes[i]);
         }
-
         for (Map.Entry<String, EditText> attribute : userInfo.entrySet()){
            String attributeName = attribute.getKey();
            EditText editText = attribute.getValue();
-
            if(editText.getText().toString().trim().isEmpty()){
                editText.setError(attributeName + " is required");
                editText.requestFocus();
@@ -109,11 +114,12 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
 
         progressBar.setVisibility(View.VISIBLE);
 
+
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    User user = new User(fullName, email);
+                    User user = new User(fullName, email,phoneNumber,petName,petBreed,postalCode);
                     FirebaseDatabase.getInstance().getReference("Users")
                             .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                             .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
