@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
-    android:backgroundTint="@color/reg_bg"
+    android:background="@drawable/deep_green_grass"
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".LoginActivity">
@@ -13,15 +12,16 @@
     <androidx.cardview.widget.CardView
         android:layout_width="355dp"
         android:layout_height="525dp"
-        app:cardCornerRadius="10dp"
-        android:padding="5dp">
+        android:padding="5dp"
+        app:cardBackgroundColor="#00FFFFFF"
+        app:cardCornerRadius="10dp">
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#FFFFFF"
-            android:backgroundTint="@color/reg_card_bg"
+            android:background="#E6FFFFFF"
+            android:backgroundTint="#C3E9FA"
             android:gravity="center_horizontal"
             android:orientation="vertical"
             android:padding="5dp">
@@ -45,6 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
+                android:autofillHints=""
                 android:backgroundTint="@color/white"
                 android:drawableStart="@drawable/icons8_new_post_24"
                 android:drawablePadding="5dp"
@@ -59,6 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
+                android:autofillHints=""
                 android:backgroundTint="@color/white"
                 android:drawableStart="@drawable/icons8_eye_24"
                 android:drawablePadding="5dp"
