@@ -25,10 +25,6 @@ import java.util.Map;
 
 public class RegisterUser extends AppCompatActivity implements View.OnClickListener {
 
-    private String defaultPetName = "Spot";
-    private String defaultPetBreed = "mutt";
-    private String defaultPhone = "000-000-0000";
-
     private FirebaseAuth mAuth;
     private EditText editFullName;
     private EditText editEmail;

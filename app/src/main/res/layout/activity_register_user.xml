@@ -4,83 +4,128 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:backgroundTint="#D9F4DB"
+    android:gravity="center"
     android:orientation="vertical"
     tools:context=".RegisterUser">
 
-    <EditText
-        android:id="@+id/editText_register_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="@string/register_user_name"
-        tools:layout_editor_absoluteX="60dp"
-        tools:layout_editor_absoluteY="39dp" />
+    <androidx.cardview.widget.CardView
+        android:layout_width="355dp"
+        android:layout_height="523dp"
+        android:layout_gravity="center"
+        app:cardBackgroundColor="#C3E9FA"
+        app:cardCornerRadius="10dp">
 
-    <EditText
-        android:id="@+id/editText_register_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textEmailAddress"
-        android:hint="@string/register_user_email" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/editText_register_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:hint="@string/register_user_password" />
+            <EditText
+                android:id="@+id/editText_register_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:backgroundTint="#FFFFFF"
+                android:drawableStart="@drawable/icons8_eye_24"
+                android:drawablePadding="5dp"
+                android:ems="10"
+                android:hint="@string/register_user_password"
+                android:inputType="textPassword"
+                android:textColor="#02A6F1" />
 
-    <EditText
-        android:id="@+id/editText_register_pet_breed"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text"
-        android:hint="@string/register_pet_breed" />
+            <EditText
+                android:id="@+id/editText_phone_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:backgroundTint="#FFFFFF"
+                android:drawableStart="@drawable/icons8_phone_24"
+                android:drawablePadding="5dp"
+                android:ems="10"
+                android:hint="@string/register_phone_number"
+                android:inputType="phone" />
 
-    <EditText
-        android:id="@+id/editText_register_pet_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text"
-        android:hint="@string/register_pet_name" />
+            <EditText
+                android:id="@+id/editText_register_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:backgroundTint="#FFFFFF"
+                android:drawableStart="@drawable/icons8_new_post_24"
+                android:drawablePadding="5dp"
+                android:ems="10"
+                android:hint="@string/register_user_email"
+                android:inputType="textEmailAddress" />
 
+            <EditText
+                android:id="@+id/editText_postal_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:backgroundTint="#FFFFFF"
+                android:drawableStart="@drawable/icons8_address_24"
+                android:drawablePadding="5dp"
+                android:ems="10"
+                android:hint="@string/register_postal_code"
+                android:inputType="textPostalAddress" />
 
-    <EditText
-        android:id="@+id/editText_postal_code"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPostalAddress"
-        android:hint="@string/register_postal_code" />
+            <EditText
+                android:id="@+id/editText_register_pet_breed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:backgroundTint="#FFFFFF"
+                android:drawableStart="@drawable/icons8_pet_commands_summon_24_"
+                android:drawablePadding="5dp"
+                android:ems="10"
+                android:hint="@string/register_pet_breed"
+                android:inputType="text" />
 
+            <EditText
+                android:id="@+id/editText_register_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:autofillHints=""
+                android:backgroundTint="#FFFFFF"
+                android:drawableStart="@drawable/icons8_user_24"
+                android:drawablePadding="5dp"
+                android:ems="10"
+                android:hint="@string/register_user_name"
+                android:inputType="textPersonName" />
 
-    <EditText
-        android:id="@+id/editText_phone_number"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="phone"
-        android:hint="@string/register_phone_number" />
+            <EditText
+                android:id="@+id/editText_register_pet_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:backgroundTint="#FFFFFF"
+                android:drawableStart="@drawable/icons8_dog_24"
+                android:drawablePadding="5dp"
+                android:ems="10"
+                android:hint="@string/register_pet_name"
+                android:inputType="text" />
 
+            <Button
+                android:id="@+id/button_register_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#3CA6FB"
+                android:text="@string/register_user_button" />
+        </LinearLayout>
 
+    </androidx.cardview.widget.CardView>
 
-
-    <Button
-        android:id="@+id/button_register_user"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/register_user_button" />
 
     <ProgressBar
         android:id="@+id/progressBar_register_user"
         style="?android:attr/progressBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
 </LinearLayout>
