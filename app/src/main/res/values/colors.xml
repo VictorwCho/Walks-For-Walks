@@ -7,4 +7,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="reg_bg">#BAFABF</color>
+    <color name="reg_card_bg">#C3E9FA</color>
+    <color name="reg_btn_bg">#3CA6FB</color>
+    <color name="reg_eT_text">#000E29</color>
+
 </resources>
