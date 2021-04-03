@@ -12,10 +12,11 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="355dp"
-        android:layout_height="523dp"
+        android:layout_height="525dp"
         android:layout_gravity="center"
-        app:cardBackgroundColor="#C3E9FA"
-        app:cardCornerRadius="10dp">
+        app:cardBackgroundColor="@color/reg_card_bg"
+        app:cardCornerRadius="10dp"
+        android:padding="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
