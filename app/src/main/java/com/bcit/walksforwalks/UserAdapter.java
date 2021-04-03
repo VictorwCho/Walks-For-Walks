@@ -1,6 +1,7 @@
 package com.bcit.walksforwalks;
 
 
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +51,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         petName.setText(user.getPetName());
         petBreed.setText(user.getPetBreed());
         phone.setText(user.getPhone());
-//        containerImageView.setImageResource(user.image());
+//        profilePic.setImageURI(Uri.parse(user.getProfilePic()));
 
 //        deleteButton.setOnClickListener(v -> onAdapterItemListener.onClick(user));
 
@@ -68,7 +69,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         TextView petName;
         TextView petBreed;
         TextView phone;
-//        ImageView profilePic;
+        ImageView profilePic;
 
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);

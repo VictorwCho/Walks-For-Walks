@@ -1,5 +1,7 @@
 package com.bcit.walksforwalks;
 
+import android.net.Uri;
+
 public class User {
     public String fullName;
     public String email;
@@ -7,18 +9,23 @@ public class User {
     public String petName;
     public String petBreed;
     public String postalCode;
+    public String profilePic;
 
     public User() {
 
     }
 
-    public User(String fullName, String email, String phone, String petName, String petBreed, String postalCode) {
+    public User(String fullName, String email, String phone, String petName, String petBreed, String postalCode, String profilePic) {
         this.fullName = fullName;
         this.email = email;
         this.phone = phone;
         this.petName = petName;
         this.petBreed = petBreed;
         this.postalCode = postalCode;
+        if (profilePic == null) {
+            profilePic = Uri.parse("android.resource://com.bcit.walksforwalks/drawable/person.png").toString();
+        }
+        this.profilePic = profilePic;
     }
 
     public User(String fullName, String email) {
@@ -68,4 +75,12 @@ public class User {
     public void setPetBreed(String petBreed) {
         this.petBreed = petBreed;
     }
+
+    public String getPostalCode() { return postalCode; }
+
+    public void setPostalCode(String postalCode) { this.postalCode = postalCode; }
+
+    public String getProfilePic() { return profilePic; }
+
+    public void setProfilePic(String profilePic) { this.profilePic = profilePic; }
 }

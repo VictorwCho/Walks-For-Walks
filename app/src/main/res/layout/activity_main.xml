@@ -55,7 +55,11 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="start"
+            android:background="#E6FFFFFF"
+            android:backgroundTint="@color/reg_bg_darker"
             app:headerLayout="@layout/nav_header"
+            app:itemIconTint="@color/black"
+            app:itemTextColor="@color/black"
             app:menu="@menu/menu_nav" />
 
     </androidx.drawerlayout.widget.DrawerLayout>
