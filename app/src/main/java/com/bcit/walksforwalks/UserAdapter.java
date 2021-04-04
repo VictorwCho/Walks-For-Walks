@@ -1,6 +1,7 @@
 package com.bcit.walksforwalks;
 
 
+import android.content.Context;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,47 +12,48 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 /*
 Custom adapter to handle the recycler view
  */
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
-
+    private Context mContext;
     private final List<User> users;
 
-    private OnAdapterItemListener onAdapterItemListener;
+//    private OnAdapterItemListener onAdapterItemListener;
+//
+//    public void setAdapterItemListener(OnAdapterItemListener onAdapterItemListener) {
+//        this.onAdapterItemListener = onAdapterItemListener;
+//    }
 
-    public void setAdapterItemListener(OnAdapterItemListener onAdapterItemListener) {
-        this.onAdapterItemListener = onAdapterItemListener;
-    }
-
-    public UserAdapter(List<User> users) {
+    public UserAdapter(Context context, List<User> users) {
         this.users = users;
+        this.mContext = context;
     }
 
     @NonNull
     @Override
     public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View lootView = inflater.inflate(R.layout.recycler_row_card, parent, false);
-        return new UserViewHolder(lootView);
+        View v = LayoutInflater.from(mContext).inflate(R.layout.recycler_row_card, parent, false);
+        return new UserViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
-        TextView phone = holder.phone;
-        TextView name = holder.name;
-        TextView petName = holder.petName;
-        TextView petBreed = holder.petBreed;
-//        ImageView profilePic = holder.profilePic;
-
         User user = users.get(position);
-        name.setText(user.getFullName());
-        petName.setText(user.getPetName());
-        petBreed.setText(user.getPetBreed());
-        phone.setText(user.getPhone());
-//        profilePic.setImageURI(Uri.parse(user.getProfilePic()));
+        holder.name.setText(user.getFullName());
+        holder.petName.setText(user.getPetName());
+        holder.petBreed.setText(user.getPetBreed());
+        holder.phone.setText(user.getPhone());
+        Picasso.with(mContext)
+                .load(user.getProfilePic())
+                .placeholder(R.mipmap.ic_launcher)
+                .fit()
+                .centerCrop()
+                .into(holder.profilePic);
 
 //        deleteButton.setOnClickListener(v -> onAdapterItemListener.onClick(user));
 
@@ -77,8 +79,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             petName = itemView.findViewById(R.id.tv_recycler_pet);
             petBreed = itemView.findViewById(R.id.tv_recycler_breed);
             phone = itemView.findViewById(R.id.tv_recycler_phone);
-//            profilePic = itemView.findViewById(R.id.image_recyler_profile);
-
+            profilePic = itemView.findViewById(R.id.image_recyler_profile);
         }
     }
 }

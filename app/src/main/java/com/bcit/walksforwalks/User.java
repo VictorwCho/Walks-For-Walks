@@ -2,6 +2,8 @@ package com.bcit.walksforwalks;
 
 import android.net.Uri;
 
+import com.squareup.picasso.Picasso;
+
 public class User {
     public String fullName;
     public String email;
@@ -22,9 +24,6 @@ public class User {
         this.petName = petName;
         this.petBreed = petBreed;
         this.postalCode = postalCode;
-        if (profilePic == null) {
-            profilePic = Uri.parse("android.resource://com.bcit.walksforwalks/drawable/person.png").toString();
-        }
         this.profilePic = profilePic;
     }
 

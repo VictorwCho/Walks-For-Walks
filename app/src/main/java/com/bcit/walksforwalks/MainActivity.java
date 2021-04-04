@@ -6,16 +6,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -34,12 +33,13 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static RecyclerView rvUsers;
+    private static RecyclerView mRecyclerView;
+    private UserAdapter mAdapter;
+    private DatabaseReference mDatabaseRef;
     private static List<User> userList;
     private FirebaseUser currentUser;
-    private FirebaseStorage storage;
-    private DatabaseReference dbUsers;
     public String postalCode;
+    private ProgressBar mProgressCircle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,25 +48,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Get hamburger Button
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.nav_open_drawer, R.string.nav_close_drawer);
-        // add the toggle to our hamburger
         drawer.addDrawerListener(toggle);
-        // so the toggle knows when the drawer is open or closed
         toggle.syncState();
-
-        // Set the navView onclick listener
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        rvUsers = findViewById(R.id.rV_main_users); // get rV reference
-        userList = new ArrayList<>(); // initialize the userList
+        mRecyclerView = findViewById(R.id.rV_main_users);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        currentUser = FirebaseAuth.getInstance().getCurrentUser(); // Get currentUser reference
-        dbUsers = FirebaseDatabase.getInstance().getReference("Users"); // Get database reference
+        userList = new ArrayList<>();
 
-        String current_user_uid = dbUsers.child(currentUser.getUid()).getKey();
+        mProgressCircle = findViewById(R.id.progress_circle);
+
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Users");
+        String current_user_uid = mDatabaseRef.child(currentUser.getUid()).getKey();
 
         ValueEventListener eventListener = new ValueEventListener() {
             @Override
@@ -79,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             }
         };
-        DatabaseReference currentUserDb = dbUsers.child(current_user_uid);
+        DatabaseReference currentUserDb = mDatabaseRef.child(current_user_uid);
         currentUserDb.addListenerForSingleValueEvent(eventListener);
     }
 
@@ -90,29 +89,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onStart() {
         super.onStart();
-
-
-        dbUsers.addValueEventListener(new ValueEventListener() {
+        mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
                 userList.clear();
-
-                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                    User user = userSnapshot.getValue(User.class);
+                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+                    User user = postSnapshot.getValue(User.class);
                     if (!Objects.equals(currentUser.getEmail(), user.getEmail())) {
-                        if (matchProvinceByPostalCode(postalCode, user.postalCode)) {
+                        if (matchProvinceByPostalCode(postalCode, user.getPostalCode())) {
                             userList.add(user);
                         }
                     }
-
-                    UserAdapter adapter = new UserAdapter(userList);  // get a user adapter
-                    rvUsers.setAdapter(adapter); // set the user adapter
-                    rvUsers.setLayoutManager(new LinearLayoutManager(MainActivity.this));
                 }
+                mAdapter = new UserAdapter(MainActivity.this, userList);
+                mRecyclerView.setAdapter(mAdapter);
+                mProgressCircle.setVisibility(View.INVISIBLE);
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(MainActivity.this, error.getDetails(), Toast.LENGTH_SHORT).show();
+                mProgressCircle.setVisibility(View.INVISIBLE);
             }
         });
     }
