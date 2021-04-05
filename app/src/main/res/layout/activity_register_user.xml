@@ -10,8 +10,8 @@
     tools:context=".RegisterUser">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="360dp"
-        android:layout_height="534dp"
+        android:layout_width="322dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:backgroundTint="@color/reg_card_bg"
         android:padding="5dp"

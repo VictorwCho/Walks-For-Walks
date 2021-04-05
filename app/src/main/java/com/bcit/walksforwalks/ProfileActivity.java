@@ -94,22 +94,11 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
         userName = findViewById(R.id.tV_profile_name);
         petName = findViewById(R.id.tV_profile_pet_name);
         profilePic = findViewById(R.id.iV_profile_profilePic);
-//        profilePic.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                imageChooser();
-//            }
-//        });
-
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         mDatabaseUsersRef = FirebaseDatabase.getInstance().getReference("Users");
         mStorageRef = FirebaseStorage.getInstance().getReference("Uploads");
 
     }
-
-//    private void setSaveBtn(Button btn, AlertDialog alertDialog) {
-//        btn.setOnClickListener(v -> alertDialog.dismiss());
-//    }
 
     void showDialog(){
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this); // build view into alert
@@ -132,6 +121,9 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
             @Override
             public void onClick(View v) {
                 imageChooser();
+//                Picasso.with(dialogView.getContext())
+//                        .load(imageUri)
+//                        .into(dialogProfilePic);
             }
         });
 
