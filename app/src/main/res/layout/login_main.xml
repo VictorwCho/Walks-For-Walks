@@ -10,16 +10,16 @@
     tools:context=".LoginActivity">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="355dp"
-        android:layout_height="525dp"
+        android:layout_width="321dp"
+        android:layout_height="514dp"
         android:padding="5dp"
         app:cardBackgroundColor="#00FFFFFF"
         app:cardCornerRadius="10dp">
 
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="320dp"
+            android:layout_height="512dp"
             android:background="#E6FFFFFF"
             android:backgroundTint="#C3E9FA"
             android:gravity="center_horizontal"

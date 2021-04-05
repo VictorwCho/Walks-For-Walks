@@ -45,8 +45,8 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rV_main_users"
-                    android:layout_width="410dp"
-                    android:layout_height="506dp"
+                    android:layout_width="338dp"
+                    android:layout_height="508dp"
                     android:background="@drawable/rounded_corners"
                     android:backgroundTint="#00FFFFFF"
                     android:padding="10dp"
