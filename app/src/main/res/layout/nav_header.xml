@@ -21,7 +21,8 @@
             android:layout_marginVertical="5dp"
             android:contentDescription="@string/placeholder_img"
             android:scaleType="centerInside"
-            app:srcCompat="@drawable/walksforwalks" />
+            android:backgroundTint="@color/cardview_light_background"
+            app:srcCompat="@drawable/dog_logo" />
 
     </LinearLayout>
 

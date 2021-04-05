@@ -7,8 +7,8 @@
     android:background="#00FFFFFF">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="395dp"
-        android:layout_height="wrap_content"
+        android:layout_width="336dp"
+        android:layout_height="508dp"
         app:cardBackgroundColor="#81D4FA"
         app:cardCornerRadius="10dp"
         app:cardPreventCornerOverlap="true"
@@ -16,8 +16,10 @@
         app:contentPadding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,8 +37,8 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginVertical="5dp"
-                app:shapeAppearanceOverlay="@style/circleImageViewStyle"
                 android:contentDescription="@string/profile_pic"
+                app:shapeAppearanceOverlay="@style/circleImageViewStyle"
                 tools:srcCompat="@tools:sample/avatars" />
 
             <EditText
