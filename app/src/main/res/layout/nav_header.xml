@@ -2,33 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="180dp"
+    android:layout_height="wrap_content"
     android:background="#CCFFFFFF"
-    android:backgroundTint="@color/reg_card_bg"
+    android:backgroundTint="@color/white"
     android:gravity="center">
 
     <LinearLayout
-        android:layout_width="354dp"
-        android:layout_height="141dp"
+        android:layout_width="254dp"
+        android:layout_height="119dp"
         android:layout_margin="16dp"
+        android:background="#CDFFFFFF"
         android:gravity="center"
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="349dp"
-            android:layout_height="81dp"
+            android:layout_width="253dp"
+            android:layout_height="146dp"
             android:layout_marginVertical="5dp"
             android:contentDescription="@string/placeholder_img"
             android:scaleType="centerInside"
             app:srcCompat="@drawable/walksforwalks" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="5dp"
-            android:text="@string/user_name"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="#000000" />
 
     </LinearLayout>
 

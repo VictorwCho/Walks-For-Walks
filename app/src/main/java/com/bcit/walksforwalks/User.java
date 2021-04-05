@@ -35,6 +35,24 @@ public class User {
         this.petBreed = "mutt";
     }
 
+    public void updateUser(String fullName, String phone, String petName, String petBreed, String postalCode) {
+        if (fullName !=null){
+            this.fullName = fullName;
+        }
+        if (fullName !=null){
+            this.phone = phone;
+        }
+        if (fullName !=null){
+            this.petName = petName;
+        }
+        if (fullName !=null){
+            this.petBreed = petBreed;
+        }
+        if (fullName !=null){
+            this.postalCode = postalCode;
+        }
+    }
+
     public String getFullName() {
         return fullName;
     }

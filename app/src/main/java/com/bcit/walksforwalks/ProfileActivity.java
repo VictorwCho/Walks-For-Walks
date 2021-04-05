@@ -1,17 +1,18 @@
 package com.bcit.walksforwalks;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,10 +20,10 @@ import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -40,6 +41,8 @@ import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class ProfileActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -50,11 +53,21 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
     private StorageReference mStorageRef;
     private DatabaseReference mDatabaseUsersRef;
     private StorageTask mUploadTask;
-    private ProgressBar progressBar;
     private Uri imageUri;
 
     private ImageView profilePic;
     private TextView userName;
+    private TextView petName;
+    private Button editBtn;
+
+    EditText etName;
+    EditText etPhone;
+    EditText etPetName;
+    EditText etPetBreed;
+    EditText etPostal;
+    ImageView dialogProfilePic;
+
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,20 +75,131 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
         setContentView(R.layout.activity_profile);
         Toolbar toolbar = findViewById(R.id.toolbar_profile);
         setSupportActionBar(toolbar);
-        userName = findViewById(R.id.tV_profile_frag_name);
-        profilePic = findViewById(R.id.iV_profile_frag_profilePic);
-        profilePic.setOnClickListener(new View.OnClickListener() {
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout_profile);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.nav_open_drawer, R.string.nav_close_drawer);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+        NavigationView navigationView = findViewById(R.id.nav_view_profile);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        editBtn = findViewById(R.id.btn_profile_edit);
+        editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imageChooser();
+                showDialog();
             }
         });
+
+        userName = findViewById(R.id.tV_profile_name);
+        petName = findViewById(R.id.tV_profile_pet_name);
+        profilePic = findViewById(R.id.iV_profile_profilePic);
+//        profilePic.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                imageChooser();
+//            }
+//        });
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         mDatabaseUsersRef = FirebaseDatabase.getInstance().getReference("Users");
         mStorageRef = FirebaseStorage.getInstance().getReference("Uploads");
 
     }
+
+//    private void setSaveBtn(Button btn, AlertDialog alertDialog) {
+//        btn.setOnClickListener(v -> alertDialog.dismiss());
+//    }
+
+    void showDialog(){
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this); // build view into alert
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView;
+        dialogView = inflater.inflate(R.layout.edit_profile_dialog, null);
+
+        // Get References
+        etName = dialogView.findViewById(R.id.eT_dialog_name);
+        etPhone = dialogView.findViewById(R.id.eT_dialog_phone);
+        etPetName = dialogView.findViewById(R.id.eT_dialog_petName);
+        etPetBreed = dialogView.findViewById(R.id.eT_dialog_pet_breed);
+        etPostal = dialogView.findViewById(R.id.eT_dialog_postal);
+        dialogProfilePic = dialogView.findViewById(R.id.iV_dialog);
+
+        Button btnSave = dialogView.findViewById(R.id.btn_dialog_save);
+
+        ImageView dialogProfilePic = dialogView.findViewById(R.id.iV_dialog);
+        dialogProfilePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageChooser();
+            }
+        });
+
+
+        // Set values
+        etName.setText(user.getFullName());
+        etPhone.setText(user.getPhone());
+        etPetName.setText(user.getPetName());
+        etPetBreed.setText(user.getPetBreed());
+        etPostal.setText(user.getPostalCode());
+        Picasso.with(this)
+                .load(user.getProfilePic())
+                .placeholder(R.mipmap.ic_launcher)
+                .fit()
+                .into(dialogProfilePic);
+        dialogBuilder.setView(dialogView); // set the custom view with the AlertDialog Builder
+        AlertDialog alertDialog = dialogBuilder.create(); // create alert
+        alertDialog.show(); // the the alert
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onSave();
+                alertDialog.dismiss();
+            }
+        });
+
+    }
+
+
+    void onSave() {
+        String fullName = etName.getText().toString().trim();
+        String petBreed = etPetBreed.getText().toString().trim();
+        String petName = etPetName.getText().toString().trim();
+        String postalCode = etPostal.getText().toString().trim().replaceAll(" ", "");
+        String phoneNumber = etPhone.getText().toString().trim();
+        EditText[] attributes = {etName, etPetBreed, etPetName, etPhone, etPhone};
+        String[] attributeString = {"Full Name", "Pet Breed",
+                "Pet Name", "Postal Code", "Phone Number"};
+        HashMap<String, EditText> userInfo = new HashMap<String, EditText>();
+        for (int i = 0; i < attributes.length; i++) {
+            userInfo.put(attributeString[i], attributes[i]);
+        }
+        for (Map.Entry<String, EditText> attribute : userInfo.entrySet()) {
+            String attributeName = attribute.getKey();
+            EditText editText = attribute.getValue();
+            if (editText.getText().toString().trim().isEmpty()) {
+                editText.setError(attributeName + " is required");
+                editText.requestFocus();
+                return;
+            }
+        }
+        user.updateUser(fullName,phoneNumber,  petName, petBreed, postalCode);
+        FirebaseDatabase.getInstance().getReference("Users")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(ProfileActivity.this, "Update was Successful!", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(ProfileActivity.this, "Update Failed", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+    }
+
     void imageChooser() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -143,8 +267,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
         mDatabaseUsersRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User user;
-                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     if (Objects.equals(postSnapshot.getKey(), currentUser.getUid())) {
                         user = postSnapshot.getValue(User.class);
                         Picasso.with(ProfileActivity.this)
@@ -154,10 +277,12 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
                                 .centerCrop()
                                 .into(profilePic);
                         userName.setText(user.getFullName());
+                        petName.setText(user.getPetName());
                         break;
                     }
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(ProfileActivity.this, error.getDetails(), Toast.LENGTH_SHORT).show();
@@ -182,6 +307,23 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return false;
+        int id = item.getItemId();
+        Intent intent = null;
+
+
+        if (id == R.id.nav_home) {
+            intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
+        if (id == R.id.nav_logout_profile) {
+            intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            FirebaseAuth.getInstance().signOut();
+        }
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout_profile);
+        drawer.closeDrawer(GravityCompat.START);
+
+        return true;
     }
 }

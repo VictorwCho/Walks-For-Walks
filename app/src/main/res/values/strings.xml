@@ -40,4 +40,14 @@
     <string name="person">PERSON</string>
     <string name="main">main</string>
     <string name="add_image">ADD IMAGE</string>
+    <string name="pet_name">pet_name</string>
+    <string name="nav_edit">edit</string>
+    <string name="save_btn">SAVE</string>
+    <string name="profile_pic">Profile Pic</string>
+    <string name="new_name">New Name</string>
+    <string name="new_pet_name">New Pet Name</string>
+    <string name="new_pet_breed">New Pet Breed</string>
+    <string name="new_postal_code">New Postal Code</string>
+    <string name="new_phone_number">New Phone Number</string>
+    <string name="home">Home</string>
 </resources>

@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -25,7 +26,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -134,9 +134,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent intent = null;
 
 
-        if (id == R.id.nav_profile) {
+        if (id == R.id.nav_home) {
             intent = new Intent(this, ProfileActivity.class);
             startActivity(intent);
+        }
+        if (id == R.id.nav_logout) {
+
+            intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            FirebaseAuth.getInstance().signOut();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
