@@ -2,7 +2,8 @@ package com.bcit.walksforwalks;
 
 
 import android.content.Context;
-import android.net.Uri;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,6 +57,23 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
                 .into(holder.profilePic);
 
 //        deleteButton.setOnClickListener(v -> onAdapterItemListener.onClick(user));
+        ///April 5:20
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Intent intent = new Intent(v.getContext(), MessageActivity.class);
+                String name = user.getFullName();
+                String phone = user.getPhone();
+                String email = user.getEmail();
+                String pic = user.getProfilePic();
+                intent.putExtra("name", name);
+                intent.putExtra("phone", phone);
+                intent.putExtra("email", email);
+                intent.putExtra("photo", pic);
+                v.getContext().startActivity(intent);
+                return true;
+            }
+        });
 
     }
     @Override
