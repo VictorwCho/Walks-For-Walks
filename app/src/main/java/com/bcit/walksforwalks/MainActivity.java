@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mRecyclerView = findViewById(R.id.rV_main_users);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
 
         userList = new ArrayList<>();
 
@@ -113,6 +115,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
     }
+
+//    private void userLogin() {
+//        String email = userEmail.getText().toString().trim();
+//        String password = userPassword.getText().toString().trim();
+//
+//        if (email.isEmpty()) {
+//            userEmail.setError("Email is required!");
+//            userEmail.requestFocus();
+//            return;
+//        }
+//
+//        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+//            userEmail.setError("Please enter a valid email!");
+//            userEmail.requestFocus();
+//            return;
+//        }
+//
+//        if (password.isEmpty()) {
+//            userPassword.setError("Please enter a valid password!");
+//            userPassword.requestFocus();
+//            return;
+//        }
+//
+//        if (password.length() < 6) {
+//            userPassword.setError("Min password length is 6 characters!");
+//            userPassword.requestFocus();
+//            return;
+//        }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
