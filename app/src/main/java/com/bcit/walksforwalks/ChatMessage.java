@@ -1,5 +1,6 @@
 package com.bcit.walksforwalks;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class ChatMessage {
@@ -11,7 +12,6 @@ public class ChatMessage {
     public ChatMessage(String mText, String mUser) {
         messageText = mText;
         messageUser = mUser;
-
         messageTime = new Date().getTime();
     }
 

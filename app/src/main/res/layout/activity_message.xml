@@ -36,7 +36,7 @@
                     android:id="@+id/textView1_message_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TextView"
+                    android:hint="@string/activity_message_text"
                     android:textSize="18sp" />
 
                 <TextView
@@ -75,8 +75,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="texthere" />
+                android:inputType="textPersonName" />
 
             <Button
                 android:id="@+id/button_message_send"

@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.renderscript.Sampler;
@@ -16,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,7 +29,11 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.text.DateFormat;
+import java.text.Format;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class MessageActivity extends AppCompatActivity implements View.OnClickListener {
@@ -40,6 +46,7 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
     private ChatAdapter chatAdapter;
     private RecyclerView mesRecyclerView;
     private List<ChatMessage> chatList;
+    public ImageView return_home;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
@@ -98,6 +105,21 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
             }
         });
 
+        Toast.makeText(this, "Click on the profile pic to return home", Toast.LENGTH_SHORT).show();
+
+        /// Return home after page
+        return_home = findViewById(R.id.imageView_message_picture);
+        return_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = null;
+                intent = new Intent(MessageActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+
         mDatabaseRef.child(currentUser.getUid()).child("conversations")
                 .addValueEventListener(new ValueEventListener() {
             @Override
@@ -106,7 +128,10 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
                 for (DataSnapshot x : snapshot.getChildren()) {
                     if (x.child("messageUser").getValue().toString().equals(string_email)) {
                         String email = x.child("messageUser").getValue().toString();
-                        String time = x.child("messageTime").getValue().toString();
+                        Long long_time = (Long) x.child("messageTime").getValue();
+                        Format format = new SimpleDateFormat("EEE, dd MMM yyyy h:mm a");
+                        String time = format.format(long_time);
+//                      String time = x.child("messageTime").getValue().toString();
                         String message = x.child("messageText").getValue().toString();
                         ChatMessage chat = new ChatMessage(email, time, message);
 //                        Log.d("debug", chat.toString());
@@ -137,4 +162,7 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
 //        Log.d("DEBUG", string_key);
 
     }
+
+
+
 }

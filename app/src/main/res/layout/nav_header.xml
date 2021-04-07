@@ -22,7 +22,7 @@
             android:backgroundTint="@color/cardview_light_background"
             android:contentDescription="@string/placeholder_img"
             android:scaleType="centerInside"
-            app:srcCompat="@drawable/logout_icon" />
+            app:srcCompat="@drawable/dog_logo" />
 
     </LinearLayout>
 

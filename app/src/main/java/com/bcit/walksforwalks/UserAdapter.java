@@ -3,7 +3,6 @@ package com.bcit.walksforwalks;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,9 +57,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
 //        deleteButton.setOnClickListener(v -> onAdapterItemListener.onClick(user));
         ///April 5:20
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View v) {
+            public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), MessageActivity.class);
                 String name = user.getFullName();
                 String phone = user.getPhone();
@@ -71,9 +70,19 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
                 intent.putExtra("email", email);
                 intent.putExtra("photo", pic);
                 v.getContext().startActivity(intent);
+            }
+        });
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener()
+        {
+            @Override
+            public boolean onLongClick(View v) {
+                Intent intent = new Intent(v.getContext(), Ratings.class);
+                v.getContext().startActivity(intent);
                 return true;
             }
         });
+
 
     }
     @Override

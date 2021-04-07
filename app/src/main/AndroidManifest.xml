@@ -17,9 +17,11 @@
         android:theme="@style/Theme.Walksforwalks">
         <activity android:name=".MessageActivity"></activity>
         <activity android:name=".ProfileActivity" />
+        <activity android:name=".Ratings"></activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".RegisterUser" />
         <activity android:name=".LoginActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
