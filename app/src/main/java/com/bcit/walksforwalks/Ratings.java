@@ -60,7 +60,6 @@ public class Ratings extends AppCompatActivity {
                else
                    ratingMessage = averageRating;
 
-
                Toast.makeText(getApplicationContext(), ratingMessage, Toast.LENGTH_LONG).show();
                Intent intent = new Intent(Ratings.this, MainActivity.class);
                startActivity(intent);
