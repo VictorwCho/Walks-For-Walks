@@ -38,11 +38,11 @@ import java.util.List;
 
 public class MessageActivity extends AppCompatActivity implements View.OnClickListener {
     private FirebaseUser currentUser;
-    DatabaseReference mDatabaseRef;
-    String string_name;
-    String string_email;
-    EditText editTextMessage;
-    String string_key;
+    private DatabaseReference mDatabaseRef;
+    private String string_name;
+    private String string_email;
+    private EditText editTextMessage;
+    private String string_key;
     private ChatAdapter chatAdapter;
     private RecyclerView mesRecyclerView;
     private List<ChatMessage> chatList;
@@ -67,7 +67,6 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
         Button sendMessage = findViewById(R.id.button_message_send);
         sendMessage.setOnClickListener(this);
 
-
         string_name = intent.getStringExtra("name");
         String string_phone = intent.getStringExtra("phone");
         string_email = intent.getStringExtra("email");
@@ -75,8 +74,8 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
         Picasso.with(this)
                 .load(string_pic)
                 .fit()
+                .centerCrop()
                 .into(imageView);
-
 
         textViewName.setText(string_name);
         textViewPhone.setText(string_phone);
@@ -118,8 +117,6 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
             }
         });
 
-
-
         mDatabaseRef.child(currentUser.getUid()).child("conversations")
                 .addValueEventListener(new ValueEventListener() {
             @Override
@@ -131,12 +128,12 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
                         Long long_time = (Long) x.child("messageTime").getValue();
                         Format format = new SimpleDateFormat("EEE, dd MMM yyyy h:mm a");
                         String time = format.format(long_time);
-//                      String time = x.child("messageTime").getValue().toString();
                         String message = x.child("messageText").getValue().toString();
                         ChatMessage chat = new ChatMessage(email, time, message);
-//                        Log.d("debug", chat.toString());
                         chatList.add(chat);
                     }
+                    chatAdapter = new ChatAdapter(MessageActivity.this, chatList);
+                    mesRecyclerView.setAdapter(chatAdapter);
                 }
             }
 
@@ -145,24 +142,13 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
 
             }
         });
-        chatAdapter = new ChatAdapter(MessageActivity.this, chatList);
-        mesRecyclerView.setAdapter(chatAdapter);
     }
 
     @Override
     public void onClick(View v) {
         String message = editTextMessage.getText().toString();
         ChatMessage messageObject = new ChatMessage(message, currentUser.getEmail());
-        String userId = currentUser.getUid();
-        Log.d("Debug", message);
-//        mDatabaseRef.child(userId + "/" + "conversations").push().setValue(messageObject);
         mDatabaseRef.child(string_key + "/" + "conversations").push().setValue(messageObject);
         editTextMessage.setText("");
-
-//        Log.d("DEBUG", string_key);
-
     }
-
-
-
 }

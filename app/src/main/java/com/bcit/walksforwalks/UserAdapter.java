@@ -56,7 +56,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
                 .into(holder.profilePic);
 
 //        deleteButton.setOnClickListener(v -> onAdapterItemListener.onClick(user));
-        ///April 5:20
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
